@@ -95,6 +95,12 @@ export function RegisterForm() {
                                             type="button"
                                             disabled={isPending}
                                         >
+                                            <Image
+                                                alt="GitHub" 
+                                                src="/logos/GitHub.svg"
+                                                width={20}
+                                                height={20}
+                                            />
                                             Continue with GitHub
                                         </Button>
                                         <Button
@@ -103,6 +109,12 @@ export function RegisterForm() {
                                             type="button"
                                             disabled={isPending}
                                         >
+                                            <Image
+                                                alt="Google" 
+                                                src="/logos/Google.svg"
+                                                width={20}
+                                                height={20}
+                                            />
                                             Continue with Google
                                         </Button>
                                     </div>
@@ -167,7 +179,7 @@ export function RegisterForm() {
                                     </div>
                                     <div className="text-center text-sm">
                                         Already have an account?{" "}
-                                        <Link href="/signup" className="underline underline-offset-4">
+                                        <Link href="/login" className="underline underline-offset-4">
                                             Login
                                         </Link>    
                                     </div>
