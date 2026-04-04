@@ -4,12 +4,13 @@ import prisma from '@/lib/db';
 import { google } from "@ai-sdk/google"
 import { generateText } from "ai"
 import { email } from 'zod';
+import { TRPCError } from '@trpc/server';
 
 export const appRouter = createTRPCRouter({
   testAi: baseProcedure.mutation(async () => {
-      await inngest.send({
-        name: "execute/ai"
-      })
+    await inngest.send({
+      name: "execute/ai"
+    })
 
       return { success: true, message: "Job queued" }
     }),
