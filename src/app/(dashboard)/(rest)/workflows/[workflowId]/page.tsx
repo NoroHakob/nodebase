@@ -1,20 +1,29 @@
-"use client"
-
 import { requireAuth } from "@/lib/auth-utils"
-import { useParams } from "next/navigation"
+import { HydrateClient } from "@/trpc/server"
+import { Suspense } from "react"
+import { ErrorBoundary } from "react-error-boundary"
 
 interface PageProps {
-    params: {
+    params: Promise<{
         workflowId: string
-    }
+    }>
 }
 
-const Page = async () => {
+const Page = async ({ params }: PageProps) => {
     await requireAuth()
 
-    const params = useParams()
-    
-    return <p>Workflow id: {params.workflowId}</p>
+    const { workflowId } = await params
+
+    return (
+        <HydrateClient>
+            <ErrorBoundary fallback={<p>Error loading workflow!</p>}>
+                <Suspense fallback={<p>Loading workflow...</p>}>
+                    <p>Workflow id: {workflowId}</p>
+                    {/* Replace with your WorkflowDetail component later */}
+                </Suspense>
+            </ErrorBoundary>
+        </HydrateClient>
+    )
 }
 
 export default Page;

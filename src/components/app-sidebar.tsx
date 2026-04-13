@@ -96,26 +96,6 @@ export const AppSidebar = () => {
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton 
-                            tooltip="Upgrade to Pro" 
-                            className="gap-x-4 h-10 px-4"
-                            onClick={() => {}}
-                        >
-                            <StarIcon className="h-4 w-4" />
-                            <span>Upgrade to Pro</span>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton 
-                            tooltip="Billing Portal" 
-                            className="gap-x-4 h-10 px-4"
-                            onClick={() => {}}
-                        >
-                            <CreditCardIcon className="h-4 w-4" />
-                            <span>Billing Portal</span>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                    <SidebarMenuItem>
-                        <SidebarMenuButton 
                             tooltip="Sign Out" 
                             className="gap-x-4 h-10 px-4"
                             onClick={() => authClient.signOut({
@@ -126,7 +106,7 @@ export const AppSidebar = () => {
                                 }
                             })}
                         >
-                            <StarIcon className="h-4 w-4" />
+                            <LogOutIcon className="h-4 w-4" />
                             <span>Sign out</span>
                         </SidebarMenuButton>
                     </SidebarMenuItem>
