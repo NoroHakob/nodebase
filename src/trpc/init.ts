@@ -2,6 +2,7 @@ import { auth } from '@/lib/auth';
 import { initTRPC, TRPCError } from '@trpc/server';
 import { headers } from 'next/headers';
 import { cache } from 'react';
+import superjson from "superjson"
 
 export const createTRPCContext = cache(async () => {
   return { headers: await headers() };
@@ -9,7 +10,9 @@ export const createTRPCContext = cache(async () => {
 
 type TRPCContext = Awaited<ReturnType<typeof createTRPCContext>>;
 
-const t = initTRPC.context<TRPCContext>().create();
+const t = initTRPC.context<TRPCContext>().create({
+  transformer: superjson,
+});
 
 export const createTRPCRouter = t.router;
 export const createCallerFactory = t.createCallerFactory;
