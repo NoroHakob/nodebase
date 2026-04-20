@@ -402,6 +402,7 @@ function SidebarGroupLabel({
 
   return (
     <Comp
+      suppressHydrationWarning
       data-slot="sidebar-group-label"
       data-sidebar="group-label"
       className={cn(
