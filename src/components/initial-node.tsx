@@ -10,8 +10,8 @@ import { NodeSelector } from "./node-selector"
 export const InitialNode = memo((props: NodeProps) => {
     const [selectorOpen, setSelectorOpen] = useState(false)
     return (
-        <NodeSelector open={selectorOpen} onOpenChange={setSelectorOpen}>
-            <WorkflowNode showToolbar={false}>
+        <WorkflowNode showToolbar={false}>
+            <NodeSelector open={selectorOpen} onOpenChange={setSelectorOpen}>
                 <PlaceholderNode
                     {...props}
                     onClick={() => setSelectorOpen(true)}
@@ -20,7 +20,7 @@ export const InitialNode = memo((props: NodeProps) => {
                         <PlusIcon className="size-4" />
                     </div>
                 </PlaceholderNode>    
-            </WorkflowNode>
-        </NodeSelector>
+            </NodeSelector>
+        </WorkflowNode>
     )
 })
