@@ -2,7 +2,8 @@ import { auth } from '@/lib/auth';
 import { initTRPC, TRPCError } from '@trpc/server';
 import { headers } from 'next/headers';
 import { cache } from 'react';
-import superjson from "superjson"
+import superjson from "superjson";
+import prisma from '@/lib/db';
 
 export const createTRPCContext = cache(async () => {
   return { headers: await headers() };
@@ -31,4 +32,20 @@ export const protectedProcedure = baseProcedure.use(async ({ ctx, next }) => {
   }
 
   return next({ ctx: { ...ctx, auth: session } });
+});
+
+export const premiumProcedure = protectedProcedure.use(async ({ ctx, next }) => {
+  const user = await prisma.user.findUnique({
+    where: { id: ctx.auth.user.id },
+    select: { isPremium: true }, // 👈 adjust field name to match your schema
+  });
+
+  if (!user?.isPremium) {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "This action requires a premium subscription",
+    });
+  }
+
+  return next({ ctx });
 });
