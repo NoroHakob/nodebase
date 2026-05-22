@@ -72,7 +72,6 @@ export const HttpRequestDialog = ({
     },
   });
 
-  // Reset form values when dialog opens with new defaults
   useEffect(() => {
     if (open) {
       form.reset({
