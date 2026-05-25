@@ -6,15 +6,16 @@ import { NodeType } from "@/generated/prisma";
 import { getExecutor } from "@/features/executions/lib/executor-registry";
 
 export const executeWorkflow = inngest.createFunction(
-  {
+  { 
     id: "execute-workflow",
-    triggers: [{ event: "workflows/execute.workflow" }], 
+    triggers: [{ event: "workflows/execute.workflow" }],
+    retries: 0
   },
   async ({ event, step }) => {
-    const workflowId = event.data.workflowId
+    const workflowId = event.data.workflowId;
 
     if (!workflowId) {
-      throw new NonRetriableError("Workflow ID is missing")
+      throw new NonRetriableError("Workflow ID is missing");
     }
 
     const { sortedNodes, userId } = await step.run("prepare-workflow", async () => {
@@ -24,30 +25,31 @@ export const executeWorkflow = inngest.createFunction(
           nodes: true,
           connections: true,
         },
-      })
+      });
 
       return {
         sortedNodes: topologicalSort(workflow.nodes, workflow.connections),
         userId: workflow.userId,
-      }
-    })
+      };
+    });
 
-    let context = event.data.initialData || {}
+    let context = event.data.initialData || {};
 
     for (const node of sortedNodes) {
-      const executor = getExecutor(node.type as NodeType)
+      const executor = getExecutor(node.type as NodeType);
       context = await executor({
         data: node.data as Record<string, unknown>,
         nodeId: node.id,
         userId,
         context,
         step,
-      })
+        publish: step.realtime.publish.bind(step.realtime),
+      });
     }
 
-    return { 
+    return {
       workflowId,
-      result: context,  
-    }
+      result: context,
+    };
   }
 );
