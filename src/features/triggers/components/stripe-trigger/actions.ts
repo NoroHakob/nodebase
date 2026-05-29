@@ -1,12 +1,12 @@
 "use server";
 
 import { getClientSubscriptionToken } from "inngest/react";
-import { googleFormTriggerChannel } from "@/inngest/channels/google-form-trigger";
+import { stripeTriggerChannel } from "@/inngest/channels/stripe-trigger";
 import { inngest } from "@/inngest/client";
 
-export async function fetchGoogleFormTriggerRealtimeToken() {
+export async function fetchStripeTriggerRealtimeToken() {
   const token = await getClientSubscriptionToken(inngest, {
-    channel: googleFormTriggerChannel,
+    channel: stripeTriggerChannel,
     topics: ["status"],
   });
 
